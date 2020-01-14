@@ -11,7 +11,8 @@ class NuevaCita extends Component {
             fecha: '',
             sintomas: ''
         },
-        error: false
+        error: false,
+        completado : false
     }
 
     handleChange = (e) => {
@@ -24,20 +25,23 @@ class NuevaCita extends Component {
     }
 
     handleSubmit = (e) => {
-
         e.preventDefault();
-
         const { mascota, propietario, fecha, sintomas } = this.state.cita;
         if (mascota === '' || propietario === '' || fecha === '' || sintomas === '') {
-            this.setState( { error : true});
+            this.setState({ error: true });
             return;
         }
 
-        const nuevaCita = {...this.state.cita}
+        const nuevaCita = { ...this.state.cita }
+        this.setState({ error: false , completado: true });
         nuevaCita.id = uuid();
         this.props.crearNuevaCita(nuevaCita)
     }
     render() {
+
+        const { error } = this.state;
+        const { completado } = this.state;
+
         return (
             <div className="card-mt-5 py-5">
 
@@ -46,6 +50,7 @@ class NuevaCita extends Component {
                     <h4 className="card-title text-center mb-5">
                         Llenar formulario para crear una nueva cita
                   </h4>
+
 
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group row">
@@ -106,6 +111,9 @@ class NuevaCita extends Component {
                                 ></textarea>
                             </div>
                         </div>
+
+                        {error ? <div className="alert alert-danger mt-2 mb-5 text-center"> Todos los cambios son obligarios</div> : null}
+                        {completado ? <div className="alert alert-success mt-2 mb-5 text-center"> Todos los cambios fueron almacenados</div> : null}
 
                         <div className="text-center" >
                             <button type="submit" className="btn btn-success"> Guardar </button>

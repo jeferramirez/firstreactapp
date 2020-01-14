@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import Header from './components/Header'
 import NuevaCita from './components/NuevaCita'
+import ListaCitas from './components/ListaCitas';
 
 
 class App extends Component {
@@ -30,6 +31,9 @@ class App extends Component {
 
                         <NuevaCita
                             crearNuevaCita={this.crearNuevaCita}
+                        />
+                        <ListaCitas
+                        citas={this.state.citas}
                         />
 
                     </div>
